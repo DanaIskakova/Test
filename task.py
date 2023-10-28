@@ -5,5 +5,4 @@ def main():
     print(add_two(5,6))
 
 if __name__ =='__main__':
-    exit(main())  
-      
+    exit(main())       
