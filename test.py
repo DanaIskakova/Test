@@ -30,3 +30,7 @@ def test_pipeline():
     result = pipeline()
     assert result == 7785816     
            
+test_is_prime()
+test_primes() 
+test_checksum() 
+test_pipeline()         
