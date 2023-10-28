@@ -10,8 +10,7 @@ def test_is_prime():
     assert is_prime(3) == True
     assert is_prime(4) == False
     assert is_prime(7) == True
-    assert is_prime(12) == False
-    assert is_prime(83) == False   
+    assert is_prime(12) == False 
     
 def test_primes():
     result = primes(10)
@@ -30,4 +29,4 @@ def test_checksum():
 def test_pipeline():
     result = pipeline()
     assert result == 7785816     
-      
+           
