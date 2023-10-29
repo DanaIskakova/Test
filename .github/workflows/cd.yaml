@@ -27,7 +27,7 @@ jobs:
       run: ssh -o StrictHostKeyChecking=no bdb2c2023q4_guest_3@brain-client.bigdatateam.org "touch ~/Danaisk/task41.txt"
     
     - name: Run 
-      run: python task_deploy.py $SEED
+      run: python task_deploy.py 200
        
     #- name: Run Task Deploy
     #  run: ssh -o StrictHostKeyChecking=no bdb2c2023q4_guest_3@brain-client.bigdatateam.org "python task_deploy.py $SEED > ~/Danaisk/task42.txt"
