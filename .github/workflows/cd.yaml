@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
+    env:
+      SEED: ${{ SEED }}  
     steps:
     - name: Checkout Test
       uses: actions/checkout@v3
@@ -18,8 +20,18 @@ jobs:
         mkdir -p ~/.ssh && \
         echo "$ssh_key" > ~/.ssh/id_rsa && \
         chmod 0600 ~/.ssh/id_rsa
+
+        - name: Run Task Deploy
+      run: python task_deploy.py ${{ SEED }}
+
+    - name: Login to Server
+      run: ssh -o StrictHostKeyChecking=no bdb2c2023q4_guest_3@brain-client.bigdatateam.org mkdir -p ~/Danaisk
+
     - name: Создание папки с именем в домашней директории
-      run: ssh -vvv -o StrictHostKeyChecking=no bdb2c2023q4_guest_3@brain-client.bigdatateam.org "mkdir ~/Danaisk"
+      run: ssh -o StrictHostKeyChecking=no bdb2c2023q4_guest_3@brain-client.bigdatateam.org "mkdir ~/Danaisk"
 
     - name: Создание файла task41.txt
-      run: ssh -vvv -o StrictHostKeyChecking=no bdb2c2023q4_guest_3@brain-client.bigdatateam.org "touch ~/Danaisk/task41.txt"
+      run: ssh -o StrictHostKeyChecking=no bdb2c2023q4_guest_3@brain-client.bigdatateam.org "touch ~/Danaisk/task41.txt"
+
+
+  
