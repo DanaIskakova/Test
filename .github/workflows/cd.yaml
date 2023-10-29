@@ -19,7 +19,7 @@ jobs:
         echo "$ssh_key" | base64 -d > ~/.ssh/id_rsa && \
         chmod 0600 ~/.ssh/id_rsa
     - name: Создание папки с именем в домашней директории
-      run: ssh -o StrictHostKeyChecking=no bdb2c2023q4_guest_3@brain-client.bigdatateam.org "mkdir ~/Danaisk"
+      run: ssh bdb2c2023q4_guest_3@brain-client.bigdatateam.org "mkdir ~/Danaisk"
 
     - name: Создание файла task41.txt
-      run: ssh -o StrictHostKeyChecking=no bdb2c2023q4_guest_3@brain-client.bigdatateam.org "touch ~/Danaisk/task41.txt"
+      run: ssh bdb2c2023q4_guest_3@brain-client.bigdatateam.org "touch ~/Danaisk/task41.txt"
