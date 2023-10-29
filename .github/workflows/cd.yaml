@@ -1,17 +1,26 @@
-name: CI
+name: CD
 
 on:
   push:
     branches:
-      - master
+      - CD
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout Repository
+    - name: Checkout Test
       uses: actions/checkout@v2
 
-    - name: Run Tests
+    - name: Логин на сервер
       run: |
-        echo "OK"
+          ssh-keyscan -H brain-client.bigdatateam.org >> ~/.ssh/known_hosts
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh -i ~/.ssh/id_rsa bdb2c2023q4_guest_3@brain-client.bigdatateam.org
+
+    - name: Создание папки с именем в домашней директории
+      run: ssh bdb2c2023q4_guest_3@brain-client.bigdatateam.org "mkdir ~/Danaisk"
+
+    - name: Создание файла task41.txt
+      run: ssh bdb2c2023q4_guest_3@brain-client.bigdatateam.org "touch ~/Danaisk/task41.txt"
