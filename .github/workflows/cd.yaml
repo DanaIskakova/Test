@@ -21,7 +21,7 @@ jobs:
         chmod 0600 ~/.ssh/id_rsa
 
     - name: Run Task Deploy
-      run: python3 task_deploy.py $SEED
+      run: task task_deploy.py $SEED
 
     - name: Login to Server
       run: ssh -o StrictHostKeyChecking=no bdb2c2023q4_guest_3@brain-client.bigdatateam.org mkdir -p ~/Danaisk
