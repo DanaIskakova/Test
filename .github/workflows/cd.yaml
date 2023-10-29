@@ -8,16 +8,18 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
     steps:
     - name: Checkout Test
       uses: actions/checkout@v2
-
-    - name: Логин на сервер
+    - name: Set ssh key
       run: |
-          ssh-keyscan -H brain-client.bigdatateam.org >> ~/.ssh/known_hosts
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh -i ~/.ssh/id_rsa bdb2c2023q4_guest_3@brain-client.bigdatateam.org
+        mkdir -p ~/.ssh && \
+        echo "$ssh_key" | base64 -d > ~/.ssh/id_rsa && \
+        chmod 0600 ~/.ssh/id_rsa
+    - name: Логин на сервер
+      run: sh -o StrictHostKeyChecking=no bdb2c2023q4_guest_3@brain-client.bigdatateam.org
 
     - name: Создание папки с именем в домашней директории
       run: ssh bdb2c2023q4_guest_3@brain-client.bigdatateam.org "mkdir ~/Danaisk"
