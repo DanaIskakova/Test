@@ -33,4 +33,5 @@ def test_pipeline():
 test_is_prime()
 test_primes() 
 test_checksum() 
-test_pipeline()         
+test_pipeline()   
+      
