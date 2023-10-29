@@ -21,13 +21,10 @@ jobs:
         chmod 0600 ~/.ssh/id_rsa
 
     - name: Создание папки с именем в домашней директории
-      run: ssh -o StrictHostKeyChecking=no bdb2c2023q4_guest_3@brain-client.bigdatateam.org "mkdir ~/Danaisk"
+      run: ssh -o StrictHostKeyChecking=no bdb2c2023q4_guest_3@brain-client.bigdatateam.org "[[ -d ~/Danaisk ]] || mkdir ~/Danaisk"
     
     - name: Run Task Deploy
       run: ssh -o StrictHostKeyChecking=no bdb2c2023q4_guest_3@brain-client.bigdatateam.org "python task_deploy.py $SEED > ~/Danaisk/task42.txt"
-
-    - name: Создание папки с именем в домашней директории
-      run: ssh -o StrictHostKeyChecking=no bdb2c2023q4_guest_3@brain-client.bigdatateam.org "mkdir ~/Danaisk"
 
     - name: Создание файла task41.txt
       run: ssh -o StrictHostKeyChecking=no bdb2c2023q4_guest_3@brain-client.bigdatateam.org "touch ~/Danaisk/task41.txt"
