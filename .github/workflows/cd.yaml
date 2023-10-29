@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
-    env:
       SEED: ${{ SEED }}  
     steps:
     - name: Checkout Test
