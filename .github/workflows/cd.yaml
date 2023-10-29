@@ -1,0 +1,39 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - CD
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
+      SEED: ${{ secrets.SEED }}  
+    steps:
+    - name: Checkout Test
+      uses: actions/checkout@v3
+    - name: Set ssh key
+      run: |
+        mkdir -p ~/.ssh && \
+        echo "$ssh_key" > ~/.ssh/id_rsa && \
+        chmod 0600 ~/.ssh/id_rsa
+
+    - name: Создание папки с именем в домашней директории
+      run: ssh -o StrictHostKeyChecking=no bdb2c2023q4_guest_3@brain-client.bigdatateam.org "[[ -d ~/Danaisk ]] || mkdir ~/Danaisk"
+    
+    - name: Создание файла task41.txt
+      run: ssh -o StrictHostKeyChecking=no bdb2c2023q4_guest_3@brain-client.bigdatateam.org "touch ~/Danaisk/task41.txt"
+    
+    #- name: Run Task Deploy
+    #  run: ssh -o StrictHostKeyChecking=no bdb2c2023q4_guest_3@brain-client.bigdatateam.org "python task_deploy.py $SEED > ~/Danaisk/task42.txt"
+
+    - name: Run Task Deploy and Save Output
+      id: run_task_deploy
+      run: |
+        output=$(python task_deploy.py $SEED)
+        echo "::set-output name=output::$output"
+
+    - name: Login to Server and Save Output
+      run: ssh -o StrictHostKeyChecking=no bdb2c2023q4_guest_3@brain-client.bigdatateam.org "mkdir -p ~/Danaisk && echo '${{ steps.run_task_deploy.outputs.output }}' > ~/Danaisk/task42.txt"
